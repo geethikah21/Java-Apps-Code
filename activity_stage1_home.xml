@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.geeth.learnbharati.Stage1_Home"
+    android:onClick="goToMainPage">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vowels"
+        android:id="@+id/vowelS1"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/stage1_title"
+        android:layout_centerHorizontal="true"
+        android:onClick="goToPageVowel" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consonants"
+        android:id="@+id/conS1"
+        android:layout_marginTop="53dp"
+        android:layout_below="@+id/vowelS1"
+        android:layout_centerHorizontal="true"
+        android:onClick="goToPageConsonant" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vowel-Consonant Combinations"
+        android:id="@+id/vcS1"
+        android:layout_below="@+id/conS1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:onClick="goToPageVowelConsonant" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Stage 1 - Learn Characters"
+        android:id="@+id/stage1_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

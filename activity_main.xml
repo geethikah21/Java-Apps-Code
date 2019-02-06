@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,57 +7,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.geeth.physics_app.MainActivity"
-    android:clickable="false">
-
+    tools:context="com.example.geeth.learnbharati.MainActivity"
+    android:background="#FFFFFF">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Physics Dictionary"
+        android:text="Learn Bharati"
         android:id="@+id/title"
         android:textStyle="bold"
-        android:textColor="#000000"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Search for a term"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/search_edit_text"
-        android:layout_below="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search By Topic:"
-        android:id="@+id/search_topic"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/searchButton"
-        android:layout_alignEnd="@+id/search_edit_text"
-        android:layout_marginTop="37dp" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topicsList"
-        android:layout_marginTop="37dp"
-        android:layout_below="@+id/search_topic"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/searchButton"
-        android:onClick="pullUpTerm"
-        android:layout_below="@+id/search_edit_text"
+        android:text="Stage 1"
+        android:id="@+id/stage1"
+        android:onClick="goToStage1Home"
+        android:layout_above="@+id/stage2"
         android:layout_centerHorizontal="true"
-        android:background="#d899f9" />
+        android:layout_marginBottom="56dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stage 2"
+        android:id="@+id/stage2"
+        android:layout_marginBottom="62dp"
+        android:layout_above="@+id/stage3"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stage 3"
+        android:id="@+id/stage3"
+        android:layout_marginBottom="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/stage2" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/languageSpinner"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
 
 </RelativeLayout>
