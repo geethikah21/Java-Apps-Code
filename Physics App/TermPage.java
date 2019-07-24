@@ -24,6 +24,7 @@ import java.util.Scanner;
 public class TermPage extends AppCompatActivity {
     TextView termNameFromTopic;
     TextView termNameFromSearch;
+    TextView termNamefromSearchPage;
     TextView definitionBody;
     ListView relatedList;
     String termInput;
@@ -40,6 +41,7 @@ public class TermPage extends AppCompatActivity {
         //instantiate objects
         termNameFromTopic = (TextView) findViewById(R.id.termNameFromTopic);
         termNameFromSearch = (TextView) findViewById(R.id.termNameFromSearch);
+        termNamefromSearchPage = (TextView) findViewById(R.id.termNameFromSearchPage);
         definitionBody = (TextView) findViewById(R.id.definition_body);
         relatedList = (ListView) findViewById(R.id.relatedList);
 
@@ -53,6 +55,7 @@ public class TermPage extends AppCompatActivity {
 
         termNameFromTopic.setText(getIntent().getStringExtra("term"));
         termNameFromSearch.setText(getIntent().getStringExtra("search"));
+        termNamefromSearchPage.setText(getIntent().getStringExtra("termFromSearchPage"));
 
         if(!termNameFromSearch.getText().toString().equals("")) {
             termInput = termNameFromSearch.getText().toString();
@@ -64,6 +67,8 @@ public class TermPage extends AppCompatActivity {
                 DataInputStream textFileStream1 = new DataInputStream(getAssets().open("terms_topics"));
                 Scanner searchScan = new Scanner(textFileStream1);
                 if(termListContainsSearch(termInput,searchScan)) {
+                    DataInputStream textFileStream5 = new DataInputStream(getAssets().open("terms_topics"));
+                    searchScan = new Scanner(textFileStream5);
                     String topic = findTopicTermPage(termInput, searchScan);
                     DataInputStream textFileStream2 = new DataInputStream(getAssets().open(topic));
                     Scanner scan = new Scanner(textFileStream2);
@@ -71,8 +76,10 @@ public class TermPage extends AppCompatActivity {
                 }
                 else {
                     Intent searchIntent = new Intent(this, SearchPage.class);
-                    //searchIntent.putExtra("search", search);
-                    //searchIntent.putExtra("searchTerms", findTermsThatContainSearch(search,searchScan));
+                    DataInputStream textFileStream6 = new DataInputStream(getAssets().open("terms_topics"));
+                    searchScan = new Scanner(textFileStream6);
+                    searchIntent.putExtra("search", search);
+                    searchIntent.putExtra("searchTerms", findTermsThatContainSearch(search,searchScan));
                     startActivity(searchIntent);
                 }
             } catch (IOException e) {
@@ -96,6 +103,25 @@ public class TermPage extends AppCompatActivity {
                 }
             }
         }
+        //Begin changes MP3 2019
+        else if(!termNamefromSearchPage.getText().toString().equals("")) {
+            termInput = termNamefromSearchPage.getText().toString();
+            //Toast.makeText(getBaseContext(), termInput, Toast.LENGTH_LONG).show();
+            if(!topicContainsTerm(termInput)) {
+                try {
+                    DataInputStream textFileStream1 = new DataInputStream(getAssets().open("terms_topics"));
+                    Scanner topicScan = new Scanner(textFileStream1);
+                    String topic = findTopicTermPage(termInput, topicScan);
+                    //Toast.makeText(getBaseContext(), "Hi", Toast.LENGTH_LONG).show();
+                    DataInputStream textFileStream2 = new DataInputStream(getAssets().open(topic));
+                    Scanner scan = new Scanner(textFileStream2);
+                    loadTermsTermPage(scan, topic);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //End changes MP3 2019
         else {
             termInput = "";
         }
@@ -171,6 +197,7 @@ public class TermPage extends AppCompatActivity {
         return "";
     }
 
+    //Begin changes for 3 MP 2019
     public static String formatSearch(String termInput) {
         termInput = termInput.trim();
         String formatted = "";
@@ -190,7 +217,9 @@ public class TermPage extends AppCompatActivity {
         searchScan.nextLine();
         for(int i=0; i<numberOfLines; i++) {
             String line = searchScan.nextLine();
-            if(line.substring(0, line.indexOf(",")).equals(search)) {
+            String[] term = line.split(",");
+            //Toast.makeText(getBaseContext(), term[0], Toast.LENGTH_LONG).show();
+            if(term[0].equals(search)) {
                 Toast.makeText(getBaseContext(), "Yes", Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -205,12 +234,14 @@ public class TermPage extends AppCompatActivity {
         searchScan.nextLine();
         for(int i=0; i<numberOfLines; i++) {
             String line = searchScan.nextLine();
-            if(line.substring(0, line.indexOf(",")).indexOf(search) != -1) {
+            String[] term = line.split(",");
+            if(term[0].indexOf(search) != -1) {
                 relatedSearchTerms += line.substring(0, line.indexOf(",")) + ", ";
             }
         }
         return relatedSearchTerms;
     }
+    //End changes for MP3 2019
 
     public void goHome(View view) {
         Intent home = new Intent(this, MainActivity.class);

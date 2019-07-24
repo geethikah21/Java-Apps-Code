@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SearchPage extends AppCompatActivity {
 
     ListView searchOptions;
+    TextView errorField;
     Search search = new Search();
 
     @Override
@@ -18,8 +20,9 @@ public class SearchPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
         searchOptions = (ListView) findViewById(R.id.search_options);
-        //search.setSearch(getIntent().getStringExtra("search"));
-        //search.setRelatedSearchTerms(getIntent().getStringExtra("searchTerms"));
+        errorField = (TextView) findViewById(R.id.errorField);
+        search.setSearch(getIntent().getStringExtra("search"));
+        search.setRelatedSearchTerms(getIntent().getStringExtra("searchTerms"));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, search.splitSearchTerms(search.getRelatedSearchTerms())); //initializing ArrayAdapter
         searchOptions.setAdapter(adapter); //sets adapter as the ArrayAdapter for listView
@@ -27,12 +30,16 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 //Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " was clicked", Toast.LENGTH_LONG).show();
-                //Intent topicListIntent = new Intent(view.getContext(), TopicList.class);
-                //String topic = parent.getItemAtPosition(position).toString();
-                //topicListIntent.putExtra("topic", topic); //passing the name of the topic from the main screen to the topic list screen
-                //startActivity(topicListIntent);
+                Intent termPageIntent = new Intent(view.getContext(), TermPage.class);
+                String term = parent.getItemAtPosition(position).toString();
+                termPageIntent.putExtra("termFromSearchPage", term); //passing the name of the term from the search page to the term page screen
+                startActivity(termPageIntent);
             }
         });
+
+        if(search.getRelatedSearchTerms().equals("")) {
+            errorField.setText("Sorry, no terms were similar to your search.");
+        }
     }
 
     public void goHome(View view) {
