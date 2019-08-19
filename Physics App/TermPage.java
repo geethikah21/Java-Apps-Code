@@ -18,7 +18,9 @@ import org.w3c.dom.Text;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class TermPage extends AppCompatActivity {
@@ -28,9 +30,8 @@ public class TermPage extends AppCompatActivity {
     TextView definitionBody;
     ListView relatedList;
     String termInput;
-    String search;
     Term term = new Term();
-    ArrayList<Term> termInfoTermPage;
+    HashMap<String, Term> termInfo_termPage = new HashMap<String, Term>();
     String[] relatedTerms;
 
     @Override
@@ -47,10 +48,9 @@ public class TermPage extends AppCompatActivity {
 
         Intent receivingIntent = this.getIntent();
         Bundle bundle = receivingIntent.getExtras();
-        //termInfoTermPage = (ArrayList<Term>)(bundle.getSerializable("termInfo"));
 
-        if(termInfoTermPage == null) {
-            termInfoTermPage = new ArrayList<Term>();
+        if(termInfo_termPage == null) {
+            termInfo_termPage = new HashMap<String, Term>();
         }
 
         termNameFromTopic.setText(getIntent().getStringExtra("term"));
@@ -58,11 +58,9 @@ public class TermPage extends AppCompatActivity {
         termNamefromSearchPage.setText(getIntent().getStringExtra("termFromSearchPage"));
 
         if(!termNameFromSearch.getText().toString().equals("")) {
-            termInput = termNameFromSearch.getText().toString();
-            search = termInput;
-            termInput = formatSearch(termInput);
-            //Toast.makeText(getBaseContext(), termInput, Toast.LENGTH_LONG).show();
+            termInput = formatSearch(termNameFromSearch.getText().toString());
             termNameFromSearch.setText(termInput);
+            //Toast.makeText(getBaseContext(), termInput, Toast.LENGTH_LONG).show();
             try {
                 DataInputStream textFileStream1 = new DataInputStream(getAssets().open("terms_topics"));
                 Scanner searchScan = new Scanner(textFileStream1);
@@ -73,16 +71,19 @@ public class TermPage extends AppCompatActivity {
                     DataInputStream textFileStream2 = new DataInputStream(getAssets().open(topic));
                     Scanner scan = new Scanner(textFileStream2);
                     loadTermsTermPage(scan, topic);
+                    //Toast.makeText(getBaseContext(), "true", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Intent searchIntent = new Intent(this, SearchPage.class);
                     DataInputStream textFileStream6 = new DataInputStream(getAssets().open("terms_topics"));
                     searchScan = new Scanner(textFileStream6);
-                    searchIntent.putExtra("search", search);
-                    searchIntent.putExtra("searchTerms", findTermsThatContainSearch(search,searchScan));
+                    searchIntent.putExtra("search", termInput);
+                    searchIntent.putExtra("searchTerms", findTermsThatContainSearch(termInput.toLowerCase(),searchScan));
                     startActivity(searchIntent);
+                    //Toast.makeText(getBaseContext(), "false", Toast.LENGTH_LONG).show();
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -126,42 +127,45 @@ public class TermPage extends AppCompatActivity {
             termInput = "";
         }
 
-        term = getTermInfo(termInput, termInfoTermPage);
-        relatedTerms = term.splitRelatedTerms(term.getRelatedTerms());
-        definitionBody.setText(term.getDefinition());
+        if(termInfo_termPage.containsKey(termInput)) {
+            term = getTermInfo(termInput, termInfo_termPage);
+            relatedTerms = term.splitRelatedTerms(term.getRelatedTerms());
+            definitionBody.setText(term.getDefinition());
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, relatedTerms); //initializing ArrayAdapter
+            relatedList.setAdapter(adapter); //sets adapter as the ArrayAdapter for listView
+            relatedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                    Intent termIntentFromTopic = new Intent(view.getContext(), TermPage.class);
+                    termInput = parent.getItemAtPosition(position).toString();
+                    //Toast.makeText(getBaseContext(), termInput, Toast.LENGTH_LONG).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("termInfo", termInfo_termPage);
+                    termIntentFromTopic.putExtras(bundle);
+                    termIntentFromTopic.putExtra("term", termInput);
+                    startActivity(termIntentFromTopic);
+                }
+            });
+        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, relatedTerms); //initializing ArrayAdapter
-        relatedList.setAdapter(adapter); //sets adapter as the ArrayAdapter for listView
-        relatedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                Intent termIntentFromTopic = new Intent(view.getContext(), TermPage.class);
-                termInput = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getBaseContext(), termInput, Toast.LENGTH_LONG).show();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("termInfo", termInfoTermPage);
-                termIntentFromTopic.putExtras(bundle);
-                termIntentFromTopic.putExtra("term", termInput);
-                //term  = getTermInfo(termInput, termInfoTermPage);
-                //relatedTerms = term.splitRelatedTerms(term.getRelatedTerms());
-                startActivity(termIntentFromTopic);
-                //definitionBody.setText(term.getDefinition());
-                //termNameFromTopic.setText(termInput);
-            }
-        });
     }
 
-    public Term getTermInfo(String termInput, ArrayList<Term> termInfo) {
+    public Term getTermInfo(String termInput, HashMap<String, Term> termInfo) {
         Term term = new Term();
-        for(int i=0; i<termInfo.size(); i++) {
-            if(termInfo.get(i).getTermName().equals(termInput)) {
-                term.setTermName(termInfo.get(i).getTermName());
-                term.setDefinition(termInfo.get(i).getDefinition());
-                term.setRelatedTerms(termInfo.get(i).getRelatedTerms());
-                term.setTopic(termInfo.get(i).getTopic());
-            }
+        if(termInput.equals("")) {
+            term.setTermName("");
+            term.setDefinition("");
+            term.setRelatedTerms("");
+            term.setTopic("");
         }
+        else {
+            term.setTermName(termInput);
+            term.setDefinition(termInfo.get(termInput).getDefinition());
+            term.setRelatedTerms(termInfo.get(termInput).getRelatedTerms());
+            term.setTopic(termInfo.get(termInput).getTopic());
+        }
+
         return term;
     }
 
@@ -172,17 +176,12 @@ public class TermPage extends AppCompatActivity {
             String name = scan.nextLine();
             String definition = scan.nextLine();
             String related = scan.nextLine();
-            termInfoTermPage.add(new Term(name, definition, related, topic));
+            termInfo_termPage.put(name, new Term(name, definition, related, topic));
         }
     }
 
     public boolean topicContainsTerm(String termInput) {
-        for(int i=0; i<termInfoTermPage.size(); i++) {
-            if(termInfoTermPage.get(i).getTermName().equals(termInput)) {
-                return true;
-            }
-        }
-        return false;
+        return termInfo_termPage.containsKey(termInput);
     }
 
     public String findTopicTermPage(String termInput, Scanner topicScanner) {
@@ -218,13 +217,11 @@ public class TermPage extends AppCompatActivity {
         for(int i=0; i<numberOfLines; i++) {
             String line = searchScan.nextLine();
             String[] term = line.split(",");
-            //Toast.makeText(getBaseContext(), term[0], Toast.LENGTH_LONG).show();
             if(term[0].equals(search)) {
-                Toast.makeText(getBaseContext(), "Yes", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Yes", Toast.LENGTH_LONG).show();
                 return true;
             }
         }
-        Toast.makeText(getBaseContext(), "No", Toast.LENGTH_LONG).show();
         return false;
     }
 
@@ -235,7 +232,7 @@ public class TermPage extends AppCompatActivity {
         for(int i=0; i<numberOfLines; i++) {
             String line = searchScan.nextLine();
             String[] term = line.split(",");
-            if(term[0].indexOf(search) != -1) {
+            if(term[0].toLowerCase().indexOf(search) != -1) {
                 relatedSearchTerms += line.substring(0, line.indexOf(",")) + ", ";
             }
         }
