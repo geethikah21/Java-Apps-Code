@@ -1,7 +1,5 @@
 package com.example.geeth.learnbharati;
 
-//I haven't made changes to this program since I first created it, but will include it just in case
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
