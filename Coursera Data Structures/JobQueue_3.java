@@ -4,6 +4,8 @@ import javax.sound.midi.SysexMessage;
 import java.io.*;
 import java.util.*;
 
+//class for each job; contains the threadId of thread that will process the job
+//and the amount of processing time left
 class Job2 implements Comparable<Job2> {
     int threadId = 0;
     long timeLeft = 0;
@@ -18,6 +20,7 @@ class Job2 implements Comparable<Job2> {
     public int getThreadId() { return threadId; }
     public long getTimeLeft() { return timeLeft; }
 
+    //method that sorts the jobs in the correct order (order described in main class)
     public int compareTo(Job2 other) {
         if(this.timeLeft < other.timeLeft) {
             return -1;
@@ -65,6 +68,12 @@ public class JobQueue_3 {
         }
     }
 
+    /* This program simulates the processing of a list of jobs in parallel.
+       Given input with the number of threads, number of jobs, m, and a list of
+       processing times of each job, the output will have m lines, each line having
+       the number of the thread that will process that job and the time at which
+       that thread will start processing it.
+     */
     private void assignJobs() {
         // TODO: replace this code with a faster algorithm.
         /*assignedWorker = new int[jobs.length];
@@ -83,21 +92,34 @@ public class JobQueue_3 {
             nextFreeTime[bestWorker] += duration;
         }*/
 
+        //priority queue which stores the threadId of the thread that will process
+        //that job, and the processing time left for that job
+        //the priority queue is sorted first by the amount of processing time left
+        // (indicating that this one will be the next free thread),
+        //then by threadId if the amount of processing time left is the same
+        //(lowest number thread will take the next job if both threads are empty at
+        //the time)
         PriorityQueue<Job2> threads = new PriorityQueue<Job2>();
         int nextJob = 0;
 
+        //when the program starts, fill the thread queue with numWorkers-1 jobs and
+        //output start time of 0
         while(threads.size() < numWorkers) {
             threads.add(new Job2(nextJob, jobs[nextJob]));
             System.out.println(nextJob + " " + 0);
             nextJob++;
         }
+
+        //process the rest of the jobs:
+        //output the threadId of the front thread and the start time of
+        //the processing of that job
+        //then remove the front element of the queue and replace it with a job with
+        //the same threadId, but with the starting time being the sum of the polled job's
+        //processing time and the next job's processing time (this symbolizes that
+        //the next job will start after the thread completes the previous job).
         while(nextJob < jobs.length) {
-            //System.out.println("min time " + minTime);
-            //printTimePassed(threads);
-            //threads.peek().timeLeft -= minTime;
             System.out.println(threads.peek().threadId + " " + threads.peek().timeLeft);
             Job2 polled = threads.poll();
-            //threads.add(new Job2(threads.peek().threadId, threads.peek().timePassed, jobs[nextJob]));
             threads.add(new Job2(polled.threadId,polled.timeLeft + jobs[nextJob]));
             nextJob++;
         }
