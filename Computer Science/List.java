@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.ArrayList; 
 import java.io.*; 
 
+/* A+ November 2015 #4 */
+
 class Item {
 	private String name; 
 	private int number; 
@@ -58,14 +60,10 @@ public class List {
 
         	for(Item i : items) {
         		if(i.getName().equals(itemName)) {
-					System.out.print(i.getName() + " ");
 					cost += (numberNeeded / i.getNumber()) * i.getPrice();
-        			System.out.print(cost + " ");
         			if(numberNeeded % i.getNumber() != 0) {
 						cost += i.getPrice();
-						System.out.print(cost);
 					}
-					System.out.println();
 				}
 			}
         }
