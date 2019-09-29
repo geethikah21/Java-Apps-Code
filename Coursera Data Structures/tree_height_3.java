@@ -37,6 +37,14 @@ public class tree_height_3 {
             }
         }
 
+        /* This program finds the maximum depth of a given tree, which is the distance
+        *  from the root to the lowest leaf in a tree. The input into the program
+         * contains two lines: the first is an integer, n, representing the number of
+         * nodes in the tree and the second is a series of n integers that represents
+         * the node of which the ith node is a child of (eg. if the 1st number
+         * in the second line is a 4, this means that node 0 is a child of node 4.
+         * a -1 means that this node is the root node.
+         * */
         int computeHeight() {
             // Replace this code with a faster implementation
 			/*int maxHeight = 0;
@@ -46,35 +54,35 @@ public class tree_height_3 {
 					height++;
 				maxHeight = Math.max(maxHeight, height);
 			}*/
+
+			//contains the heights of each node
 			int[] heights = new int[n];
+			//says whether or not that particular node has been visited
 			boolean[] visited = new boolean[n];
             int height = 0;
             int i=0;
 
             for(int j=0; j<parent.length; j++) {
-                //System.out.println("j " + j);
                 i = j;
                 height++;
+                //traverse the tree up to the parent to determine the distance
+                //from the jth node to the root
                 while(parent[i] != -1) {
                     if(visited[j] == true) {
-                        //System.out.println("visited");
                         heights[j] = -1;
                         break;
                     }
                     else {
-                        //System.out.println("i " + i);
                         height++;
-                        //System.out.println("add to height");
                         i = parent[i];
                         visited[i] = true;
-                        //System.out.println("i " + i);
                     }
                 }
                 heights[j] = height;
                 height = 0;
             }
-            //printArray(heights);
 
+            //loops through the heighs array and finds the maximum height
             return findMaxHeight(heights);
         }
 
