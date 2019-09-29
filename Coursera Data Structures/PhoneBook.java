@@ -74,7 +74,8 @@ public class PhoneBook {
         *  lines that lists the queries. This algorithm uses the direct addressing
         *  scheme of hashing, where each number has its own index in an array.
         *  Thus, the array, contacts, is of length 10^7, which is the number of
-        *  all possible permutations of 7 digit (phone) numbers. */
+        *  all possible permutations of 7 digit (phone) numbers. The output is
+         * all of the find queries. */
 
         if(query.type.equals("add")) {
             //adds a name to the index of contacts that matches the query's number
@@ -91,6 +92,9 @@ public class PhoneBook {
             if(contacts[query.number] != null) {
                 response = contacts[query.number];
             }
+
+            //output the response (either not found or the name corresponding
+            //to the query's number
             writeResponse(response);
         }
     }
