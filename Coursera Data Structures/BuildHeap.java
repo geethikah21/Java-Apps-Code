@@ -25,6 +25,7 @@ public class BuildHeap {
         }
     }
 
+    //printing out the response
     private void writeResponse() {
         out.println(swaps.size());
         for (Swap swap : swaps) {
@@ -52,39 +53,52 @@ public class BuildHeap {
         }
       }*/
 
+      /* This program generates a min-heap from an array using HeapSort. The input
+         is a series of integers representing the original array. The output of this
+         program is the sequence of swaps used to generate the min-heap (print 0
+         if array is already sorted into a min-heap format).
+       */
+
+      //from the middle of the array to the first index, call siftDown on these
+      //indices (these are parent nodes)
       for(int i = data.length/2; i>=0; i--) {
           siftDown(i);
       }
 
-      //printArray(data);
-
     }
 
+    /* This method takes a parent node index i and its left/right children,
+     * designated as 2*i + 1 and 2*i + 2 respectively.*/
     public void siftDown(int i) {
-        int maxIndex = i;
+        int minIndex = i;
         int leftChild = 2*i+1;
         int rightChild = 2*i+2;
 
-        //System.out.println("i " + i + " left " + leftChild + " right " + rightChild);
-        if(leftChild < data.length && data[leftChild] < data[maxIndex]) {
-            maxIndex = leftChild;
-            //System.out.println("left");
+        //since this is a min-heap, the maximum value will be at the top
+        //and every child node has to be less than or equal to its parent.
+        //Thus, if the left child is less than the parent, then the minIndex
+        //becomes the index of the left child.
+        if(leftChild < data.length && data[leftChild] < data[minIndex]) {
+            minIndex = leftChild;
         }
 
-        if(rightChild < data.length && data[rightChild] < data[maxIndex]) {
-            //System.out.println("right");
-            maxIndex = rightChild;
+        //if the right child is less than the left child (if above if statement was
+        //true) or the parent (if above if statement was false), then the min
+        //index becomes the index of the rightChild.
+        if(rightChild < data.length && data[rightChild] < data[minIndex]) {
+            minIndex = rightChild;
         }
 
-        if(i != maxIndex) {
-            //swap data[i] and data[maxIndex]
-            swaps.add(new Swap(i, maxIndex));
+        //if min index isn't still the parent node (i), then swap the parent
+        //and the data in minIndex and then continue to sift the minIndex node
+        //down until it's greater than their left/right children
+        if(i != minIndex) {
+            //swap data[i] and data[minIndex]
+            swaps.add(new Swap(i, minIndex)); //add the swap to the swaps ArrayList
             int temp = data[i];
-            data[i] = data[maxIndex];
-            data[maxIndex] = temp;
-            //printArray(data);
-            //System.out.println("Max index " + maxIndex + " i " + i);
-            siftDown(maxIndex);
+            data[i] = data[minIndex];
+            data[minIndex] = temp;
+            siftDown(minIndex);
         }
     }
 
