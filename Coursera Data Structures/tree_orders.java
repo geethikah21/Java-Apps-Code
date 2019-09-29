@@ -40,8 +40,16 @@ public class tree_orders {
 			}
 		}
 
+		/* This program outputs the pre-order, in-order, and post-orders of a given
+			binary tree. The input consists of an integer n containing the number
+			of nodes and the next n lines detail the index of each vertex's key, left,
+			and right vertex (a -1 for left or right vertex means that there isn't a
+			left or right vertex). The program outputs the in-order traversal first,
+			then the pre-order traversal, then the post-order.
+		 */
 
-
+		//creates the list that will contain the in order traversal and passes it to
+		//the recursive in order method
 		List<Integer> inOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
                         // Finish the implementation
@@ -52,6 +60,8 @@ public class tree_orders {
 			return result;
 		}
 
+		//creates the list that will contain the pre order traversal and passes it to
+		//the recursive pre order method
 		List<Integer> preOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
                         // Finish the implementation
@@ -62,6 +72,8 @@ public class tree_orders {
 			return result;
 		}
 
+		//creates the list that will contain the post order traversal and passes it to
+		//the recursive post order method
 		List<Integer> postOrder() {
 			ArrayList<Integer> result = new ArrayList<Integer>();
                         // Finish the implementation
@@ -72,6 +84,7 @@ public class tree_orders {
 			return result;
 		}
 
+		//builds the in order traversal ArrayList recursively
 		void inOrderTraversal(ArrayList<Integer> result, int index) {
 			if(index == -1) {
 				return;
@@ -83,6 +96,7 @@ public class tree_orders {
 
 		}
 
+		//builds the pre order traversal ArrayList recursively
 		void preOrderTraversal(ArrayList<Integer> result, int index) {
 			if(index == -1) {
 				return;
@@ -93,6 +107,7 @@ public class tree_orders {
 			preOrderTraversal(result, right[index]);
 		}
 
+		//builds the post order traversal ArrayList recursively
 		void postOrderTraversal(ArrayList<Integer> result, int index) {
 			if(index == -1) {
 				return;
