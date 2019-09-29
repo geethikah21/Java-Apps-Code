@@ -35,6 +35,9 @@ public class PhoneBook {
 
 
     private void processQuery(Query query) {
+
+        //orig. code: given with the assignment (from Coursera)
+
         /*if (query.type.equals("add")) {
             // if we already have contact with such number,
             // we should rewrite contact's name
@@ -64,38 +67,32 @@ public class PhoneBook {
             writeResponse(response);
         }*/
 
+        //My implementation
+        /* This program is an implementation of a simple phone book. It has
+        *  three queries: add, del, and find. The input is an integer n that
+        *  states the number of queries in the test and then a series of n
+        *  lines that lists the queries. This algorithm uses the direct addressing
+        *  scheme of hashing, where each number has its own index in an array.
+        *  Thus, the array, contacts, is of length 10^7, which is the number of
+        *  all possible permutations of 7 digit (phone) numbers. */
+
         if(query.type.equals("add")) {
+            //adds a name to the index of contacts that matches the query's number
             contacts[query.number] = query.name;
         }
         else if(query.type.equals("del")) {
+            //makes the contact corresponding to the query's number null
             contacts[query.number] = null;
         }
         else {
+            //assumes that the name corresponding to the number is not found
+            //unless/until a name corresponding to the query's number is found
             String response = "not found";
             if(contacts[query.number] != null) {
                 response = contacts[query.number];
             }
             writeResponse(response);
         }
-
-        /*if(query.type.equals("add")) {
-            if(contacts.get(query.number) == null) {
-                contacts.put(query.number, query.name);
-            }
-            else {
-                contacts.replace(query.number, query.name);
-            }
-        }
-        else if(query.type.equals("del")) {
-            contacts.remove(query.number);
-        }
-        else {
-            String response = contacts.get(query.number);
-            if(response == null) {
-                response = "not found";
-            }
-            writeResponse(response);
-        }*/
     }
 
     public void processQueries() {
