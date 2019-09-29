@@ -65,8 +65,9 @@ public class tree_height_3 {
             for(int j=0; j<parent.length; j++) {
                 i = j;
                 height++;
-                //traverse the tree up to the parent to determine the distance
-                //from the jth node to the root
+                //traverse the tree up from the jth node
+                // to the parent to determine the distance
+                // from the jth node to the root
                 while(parent[i] != -1) {
                     if(visited[j] == true) {
                         heights[j] = -1;
