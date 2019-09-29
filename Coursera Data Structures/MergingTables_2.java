@@ -33,6 +33,14 @@ public class MergingTables_2 {
             parent = this;
         }
 
+        /* This program process a series of merge operations of n tables. The input
+        *  consists of an integer n, the number of tables, and m, the number
+         * of merge operations. The next m lines have the two tables involved
+         * in each merge. The output is the maximum size of all of the tables
+         * after each operation. */
+
+        //given a node, find the root of the table and then designate the parent
+        //of each node that was traversed as the root parent
         Table getParent() {
             // find super parent and compress path
             ArrayList<Table> traversedPath = new ArrayList<Table>();
@@ -42,6 +50,8 @@ public class MergingTables_2 {
                 current = current.parent;
             }
             //rank = 1
+            //make the parent of each traversed node the super parent and then chage
+            //its rank to 1
             for(int i=0; i<traversedPath.size(); i++) {
                 traversedPath.get(i).parent = current;
                 traversedPath.get(i).rank = 1;
@@ -52,6 +62,16 @@ public class MergingTables_2 {
     }
 
     int maximumNumberOfRows = -1;
+
+    //merges two tables
+    //merge the table with the lower rank (distance from parent node to the lowest node)
+    //into the table with the higher rank
+    //add the merging table's number of rows to the number
+    // of rows of the table that isn't merging and make the non-merged table the parent
+    //of the merged table
+
+    //if rank of the two tables is the same, increase rank of the table that
+    // received the merging table by 1
 
     void merge(Table destination, Table source) {
         Table realDestination = destination.getParent();
