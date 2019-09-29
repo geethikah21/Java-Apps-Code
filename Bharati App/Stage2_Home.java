@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/* In this stage, a user is given the pronunciation of a particular letter in their language, and then they are asked to choose 
+   the correct Bharati character based on the pronunciation they heard. */
+
 public class Stage2_Home extends AppCompatActivity {
     Button vowelButton;
     Button consButton;
