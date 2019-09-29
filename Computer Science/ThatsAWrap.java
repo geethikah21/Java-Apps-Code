@@ -2,6 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/* This program encodes a given letter to another. The encoding process depends on
+   the original letter (see problem #12 in A+ January 2016 file for further
+   description of problem). The inputs for these problems are in the form of data files.
+ */
 public class ThatsAWrap {
     public static void main(String[] args) throws FileNotFoundException {
         Scanner scan = new Scanner(new File("wrap.dat"));

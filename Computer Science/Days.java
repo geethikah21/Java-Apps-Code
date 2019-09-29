@@ -2,6 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/* This program determines the amount of days that have gone by between two given
+   days in the same year (see problem #1 in A+ January 2016 file for further
+   description of problem). The inputs for these problems are in the form of data files.
+ */
+
 class Day {
     private int month;
     private int day;
