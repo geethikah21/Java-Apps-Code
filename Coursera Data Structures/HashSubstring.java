@@ -24,6 +24,7 @@ public class HashSubstring {
         return new Data(pattern, text);
     }
 
+    //outputs all of the occurences of the pattern in teh text
     private static void printOccurrences(List<Integer> ans) throws IOException {
         for (Integer cur : ans) {
             out.print(cur);
@@ -35,9 +36,15 @@ public class HashSubstring {
         String s = input.pattern, t = input.text;
         int m = s.length(), n = t.length();
         int p = 1000000007; int x = 263;
+        //contains start index of all occurences
         List<Integer> occurrences = new ArrayList<Integer>();
+        //contains precomputed hash values of all substrings of the same length
+        //as pattern in the text
         long[] hashes = precomputeHashes(t, s.length(), p, x);
+        //hash value of the pattern
         long patternHash = polyHash(s, p, x);
+
+        //Orig. code (given in assignment from Coursera)
         /*for (int i = 0; i + m <= n; ++i) {
 	    boolean equal = true;
 	    for (int j = 0; j < m; ++j) {
@@ -50,8 +57,21 @@ public class HashSubstring {
                 occurrences.add(i);
 	    }*/
 
+        //My implementation
+
+        /*
+          This program finds all occurences of a pattern in a given string.
+          The input consists of a pattern P and a text T. The program uses
+          Rabin-Karp's algorithm to find the pattern's occurences. This algorithm
+          computes the hash function of a given pattern and a substring of a
+          given text and checks to see it they are equal first, then
+          checks the contents of the two strings to ensure they are actually equal if
+          their hash values are the same. The output is a line of integers representing
+          the start of all occurences of the pattern in a given text.
+         */
+
+        //loops through every string in the text that is the same length as the pattern
         for(int i=0; i + m <= n; i++) {
-            //System.out.println(hashes[i] + " " + patternHash);
             if(hashes[i] == patternHash) {
                 if(t.substring(i,m+i).equals(s)) {
                     occurrences.add(i);
@@ -71,6 +91,7 @@ public class HashSubstring {
         return true;
     }
 
+    //this method precomputes the hashes of each patternLength substring in the text
     public static long[] precomputeHashes(String text, int patternLength, int p, int x) {
         long[] hashes = new long[text.length() - patternLength + 1];
         hashes[text.length() - patternLength] = polyHash(text.substring(text.length() - patternLength, text.length()), p, x);
@@ -84,6 +105,7 @@ public class HashSubstring {
         return hashes;
     }
 
+    //hash function used to calculate hash values
     public static long polyHash(String s, int p, int x) {
         long hash = 0;
         for (int i = s.length() - 1; i >= 0; --i)
