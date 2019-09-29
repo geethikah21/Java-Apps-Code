@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/* In this stage, the user is given an array of buttons with Bharati characters on them. When they tap the button, 
+    sound of the Bharati character's representation in their language (adding sounds in progress). */
+
 public class Stage1_Main extends AppCompatActivity {
 
     //instantiating objects
