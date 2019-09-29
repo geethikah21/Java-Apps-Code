@@ -49,19 +49,19 @@ public class is_bst_hard {
 
         /* This program determines whether or not a given binary tree is a valid binary
            search tree (if it was constructed correctly). The input consists of an integer n containing the number
-			of nodes and the next n lines detail the index of each vertex's key, left,
-			and right vertex (a -1 for left or right vertex means that there isn't a
-			left or right vertex). The program outputs "correct" or "incorrect", which
-			represents whether or not the binary search tree was built correctly.
-			In this program, the left node must be strictly less than its parent node,
-			and the right node must be greater than or equal to its parent node.
+           of nodes and the next n lines detail the index of each vertex's key, left,
+           and right vertex (a -1 for left or right vertex means that there isn't a
+           left or right vertex). The program outputs "correct" or "incorrect", which
+           represents whether or not the binary search tree was built correctly.
+           In this program, the left node must be strictly less than its parent node,
+           and the right node must be greater than or equal to its parent node.
 
-			The way I approached this: I built the inorder traversal of the tree,
-			and if there was a point in which a left node was equal to its parent node,
-			I added a -1 to the in order list. If the list contained a -1, then
-			the binary search tree wasn't constructed correctly. If not, then I checked
-			to make sure that the list was in increasing order. If it isn't, then the tree
-			isn't a valid binary search tree.
+           The way I approached this: I built the inorder traversal of the tree,
+           and if there was a point in which a left node was equal to its parent node,
+           I added a -1 to the in order list. If the list contained a -1, then
+           the binary search tree wasn't constructed correctly. If not, then I checked
+           to make sure that the list was in increasing order. If it isn't, then the tree
+           isn't a valid binary search tree.
          */
 
         boolean isBinarySearchTree() {

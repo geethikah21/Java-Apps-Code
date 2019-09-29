@@ -49,17 +49,17 @@ public class is_bst_3 {
 
         /* This program determines whether or not a given binary tree is a valid binary
            search tree (if it was constructed correctly). The input consists of an integer n containing the number
-			of nodes and the next n lines detail the index of each vertex's key, left,
-			and right vertex (a -1 for left or right vertex means that there isn't a
-			left or right vertex). The program outputs "correct" or "incorrect", which
-			represents whether or not the binary search tree was built correctly.
-			In this program, the left node must be strictly less than its parent node,
-			and the right node must be strictly greater than its parent node.
+		   of nodes and the next n lines detail the index of each vertex's key, left,
+		   and right vertex (a -1 for left or right vertex means that there isn't a
+		   left or right vertex). The program outputs "correct" or "incorrect", which
+		   represents whether or not the binary search tree was built correctly.
+		   In this program, the left node must be strictly less than its parent node,
+		   and the right node must be strictly greater than its parent node.
 
-			The way I approached this: I built the inorder traversal of the tree,
-			and if the numbers are in strictly increasing order, then the tree is a valid
-			binary search tree. If not, the tree is not a valid binary search
-			tree.
+		   The way I approached this: I built the inorder traversal of the tree,
+		   and if the numbers are in strictly increasing order, then the tree is a valid
+		   binary search tree. If not, the tree is not a valid binary search
+		   tree.
          */
         boolean isBinarySearchTree() {
           // Implement correct algorithm here
