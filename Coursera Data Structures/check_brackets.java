@@ -25,6 +25,14 @@ class Bracket {
     int position;
 }
 
+/* This program checks to see if a given string of opening and closing brackets
+    contains matching closing brackets for every opening bracket. In order to solve this,
+    a stack is used to store all of the opening brackets in the string. Once a closing
+    bracket is found, the topmost opening bracket is popped off of the stack. If the
+    type of opening bracket doesn't match the closing one, then it is known that
+    the string of brackets are not properly matched. Else, the program continues
+    to run.
+ */
 class check_brackets {
     public static void main(String[] args) throws IOException {
         InputStreamReader input_stream = new InputStreamReader(System.in);
@@ -37,11 +45,16 @@ class check_brackets {
         for (int position = 0; position < text.length(); ++position) {
             char next = text.charAt(position);
 
+            //if next character in string is an opening bracket, push onto stack
             if (next == '(' || next == '[' || next == '{') {
                 // Process opening bracket, write your code here
                 opening_brackets_stack.push(new Bracket(next,position));
             }
 
+            //if next is a closing bracket, then pop top opening bracket off stack
+            //and check to see if it is the same type as the closing bracket
+            //if they don't, the final output is the position in the string in which
+            //the brackets stop matching (this is stored in errorPosition)
             if (next == ')' || next == ']' || next == '}') {
                 // Process closing bracket, write your code here
                 if(opening_brackets_stack.isEmpty()) {
