@@ -51,6 +51,8 @@ public class HashChains {
     }
 
     private void processQuery(Query query) {
+
+        //orig. code (given with assignment from Coursera)
         /*switch (query.type) {
             case "add":
                 if (!elems.contains(query.s))
@@ -75,28 +77,41 @@ public class HashChains {
                 throw new RuntimeException("Unknown query: " + query.type);
         }*/
 
+        //My implementation
+
+        /* This program implements the chaining scheme of hashing. It is similar to the
+            PhoneBook program (also in this GitHub folder), but the amount of
+            memory used is much less. There are 4 queries in this version of the
+            program: add, del, find, and check. The input consists of an integer m, the
+            number of buckets used for hashing, and an integer n, the number of queries.
+            The next n lines of the input detail each query's action.
+            The output will be all of the find queries.
+         */
+
         switch (query.type) {
+
+            //adds the query's string to the bucket corresponding to its hash function
             case "add":
                 if(!elems[hashFunc(query.s)].elems.contains(query.s)) {
                     elems[hashFunc(query.s)].elems.add(0, query.s);
                 }
                 break;
+
+            //deletes the query's string from the bucket corresponding to its
+            //hash function
             case "del":
                 if(elems[hashFunc(query.s)].elems.contains(query.s)) {
                     elems[hashFunc(query.s)].elems.remove(query.s);
                 }
                 break;
+
+            //sees if the hash table contains the given string
             case "find":
                 writeSearchResult(elems[hashFunc(query.s)].elems.contains(query.s));
                 break;
+
+            //outputs the contents of one bucket (the query's index tells which one)
             case "check":
-                /*Iterator it = elems[query.ind].elems.entrySet().iterator();
-                while(it.hasNext()) {
-                    Map.Entry next = (Map.Entry)(it.next());
-                    if((Integer)(next.getKey()) == query.ind) {
-                        System.out.print(next.getValue() + " ");
-                    }
-                }*/
                 for(int i=0; i<elems[query.ind].elems.size(); i++) {
                     System.out.print(elems[query.ind].elems.get(i) + " ");
                 }
@@ -110,8 +125,6 @@ public class HashChains {
     }
 
     public void processQueries() throws IOException {
-        //elems = new ArrayList<>();
-        //elems = new HashMap<>();
         in = new FastScanner();
         out = new PrintWriter(new BufferedOutputStream(System.out));
         bucketCount = in.nextInt();
