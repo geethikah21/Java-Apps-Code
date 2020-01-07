@@ -1,13 +1,14 @@
-package com.example.geeth.learnbharati;
+package com.example.learnbharati;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -16,16 +17,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Stage1_Home extends AppCompatActivity {
-    Typeface bharati_font;
-    Typeface tamil_font;
     String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stage1_home);
-        bharati_font = Typeface.createFromAsset(getAssets(), "fonts/NavBharati.ttf");
-        tamil_font = Typeface.createFromAsset(getAssets(), "fonts/baamini.ttf");
         language = getIntent().getStringExtra("language");
     }
 
@@ -50,7 +47,7 @@ public class Stage1_Home extends AppCompatActivity {
         startActivity(mainS1IntentVC);
     }
 
-    public void goHome(View view) {
+    public void goToMainPage(View view) {
         Intent home = new Intent(this, MainActivity.class);
         startActivity(home);
     }

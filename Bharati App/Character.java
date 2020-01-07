@@ -1,12 +1,12 @@
-package com.example.geeth.learnbharati;
+package com.example.learnbharati;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 
-import com.example.geeth.learnbharati.R;
-import com.example.geeth.learnbharati.Stage1_Main;
+import com.example.learnbharati.R;
+import com.example.learnbharati.Stage1_Main;
 
 import java.util.Locale;
 
