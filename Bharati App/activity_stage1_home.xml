@@ -47,5 +47,15 @@
         android:text="Stage 1 - Learn Characters"
         android:id="@+id/stage1_title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignEnd="@+id/vcS1" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeButton"
+        android:onClick="goHome"
+        android:src="@drawable/home2"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/stage1_title" />
+
 </RelativeLayout>

@@ -37,7 +37,8 @@
         android:id="@+id/stage2"
         android:layout_marginBottom="62dp"
         android:layout_above="@+id/stage3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="goToStage2Home" />
 
     <Button
         android:layout_width="wrap_content"

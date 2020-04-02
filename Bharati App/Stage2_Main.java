@@ -1,16 +1,15 @@
-package com.example.learnbharati;
+package com.example.geeth.learnbharati;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -27,8 +26,8 @@ public class Stage2_Main extends AppCompatActivity {
     Button choice3;
     Button choice4;
 
-    //Typeface tamil_font;
-    //Typeface bharati_font;
+    Typeface tamil_font;
+    Typeface bharati_font;
 
     ArrayList<Character> characters;
     ArrayList<Character> subsetOfCharactersToUse;
@@ -54,43 +53,46 @@ public class Stage2_Main extends AppCompatActivity {
         choice3 = (Button) findViewById(R.id.choice3);
         choice4 = (Button) findViewById(R.id.choice4);
 
+        bharati_font = Typeface.createFromAsset(getAssets(), "fonts/SundarBharati-Regular.otf");
+        tamil_font = Typeface.createFromAsset(getAssets(), "fonts/baamini.ttf");
+
         choiceButtons = new Button[] {choice1, choice2, choice3, choice4};
         characters = new ArrayList<Character>();
 
         if(language.equals("Tamil")) {
-            characters.add(new Character("அ", "vowel", sound, R.raw.short_a, Stage2_Main.this));
-            characters.add(new Character("ஆ", "vowel", sound, R.raw.long_a, Stage2_Main.this));
-            characters.add(new Character("இ", "vowel", sound, R.raw.short_i, Stage2_Main.this));
-            characters.add(new Character("ஈ", "vowel", sound, R.raw.long_e, Stage2_Main.this));
-            characters.add(new Character("உ", "vowel", sound, R.raw.short_u, Stage2_Main.this));
-            characters.add(new Character("ஊ", "vowel", sound, R.raw.long_o, Stage2_Main.this));
-            characters.add(new Character("எ", "vowel", sound, R.raw.short_e, Stage2_Main.this));
-            characters.add(new Character("ஏ", "vowel", sound, R.raw.long_ae, Stage2_Main.this));
-            characters.add(new Character("ஐ", "vowel", sound, R.raw.short_ai_ay, Stage2_Main.this));
-            characters.add(new Character("ஒ", "vowel", sound, R.raw.short_o, Stage2_Main.this));
-            characters.add(new Character("ஓ", "vowel", sound, R.raw.long_ae, Stage2_Main.this));
-            characters.add(new Character("ஔ", "vowel", sound, R.raw.long_ow_ou, Stage2_Main.this));
-            characters.add(new Character("க", "consonant", sound, R.raw.cons_k, Stage2_Main.this));
-            characters.add(new Character("ங", "consonant", sound, R.raw.cons_ng, Stage2_Main.this));
-            characters.add(new Character("ஜ", "consonant", sound, R.raw.short_a, Stage2_Main.this));
-            characters.add(new Character("ஞ", "consonant", sound, R.raw.cons_ngh, Stage2_Main.this));
-            characters.add(new Character("ட", "consonant", sound, R.raw.cons_d_t, Stage2_Main.this));
-            characters.add(new Character("ண", "consonant", sound, R.raw.cons_nn, Stage2_Main.this));
-            characters.add(new Character("ப", "consonant", sound, R.raw.cons_p_b, Stage2_Main.this));
-            characters.add(new Character("த", "consonant", sound, R.raw.cons_th_dh, Stage2_Main.this));
-            characters.add(new Character("ந", "consonant", sound, R.raw.cons_n, Stage2_Main.this));
-            characters.add(new Character("ம", "consonant", sound, R.raw.cons_m, Stage2_Main.this));
-            characters.add(new Character("ய", "consonant", sound, R.raw.cons_y, Stage2_Main.this));
-            characters.add(new Character("ர", "consonant", sound, R.raw.cons_r, Stage2_Main.this));
-            characters.add(new Character("ல", "consonant", sound, R.raw.cons_l, Stage2_Main.this));
-            characters.add(new Character("வ", "consonant", sound, R.raw.cons_v, Stage2_Main.this));
-            characters.add(new Character("ழ", "consonant", sound, R.raw.cons_zh, Stage2_Main.this));
-            characters.add(new Character("ள", "consonant", sound, R.raw.cons_ll, Stage2_Main.this));
-            characters.add(new Character("ற", "consonant", sound, R.raw.cons_r_try, Stage2_Main.this));
-            characters.add(new Character("ன", "consonant", sound, R.raw.cons_n_tin, Stage2_Main.this));
+            characters.add(new Character("அ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஆ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("இ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஈ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("உ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஊ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("எ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஏ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஐ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஒ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஓ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஔ", "vowel", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("க", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ங", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஜ", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ஞ", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ட", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ண", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ப", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("த", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ந", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ம", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ய", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ர", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ல", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("வ", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ழ", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ள", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ற", "consonant", sound, R.raw.ding, Stage2_Main.this));
+            characters.add(new Character("ன", "consonant", sound, R.raw.ding, Stage2_Main.this));
         }
         else {
-            characters.add(new Character("அ", "vowel", sound, R.raw.short_a, Stage2_Main.this));
+            characters.add(new Character("அ", "vowel", sound, R.raw.ding, Stage2_Main.this));
         }
 
         createSounds(characters);
@@ -102,7 +104,7 @@ public class Stage2_Main extends AppCompatActivity {
         answerIndex = (int)(Math.random()*(randomNums.length-1));
 
         for(int i=0; i<choiceButtons.length; i++) {
-            //SET FONT ******
+            choiceButtons[i].setTypeface(bharati_font);
             choiceButtons[i].setText(subsetOfCharactersToUse.get(randomNums[i]).getLetter());
         }
 

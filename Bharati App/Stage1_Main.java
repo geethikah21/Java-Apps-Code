@@ -1,15 +1,14 @@
-package com.example.learnbharati;
+package com.example.geeth.learnbharati;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -17,9 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
-/* In this stage, the user is given an array of buttons with Bharati characters on them. When they tap the button, 
-    sound of the Bharati character's representation in their language (adding sounds in progress). */
 
 public class Stage1_Main extends AppCompatActivity {
 
@@ -46,8 +42,8 @@ public class Stage1_Main extends AppCompatActivity {
     TextView languageName;
     String type;
     String language;
-    boolean hideExtras;
-
+    Typeface bharati_font;
+    Typeface tamil_font;
     MediaPlayer sound;
     int numberOfTamilVowels = 12;
     int numberOfTamilConsonants = 18;
@@ -86,68 +82,49 @@ public class Stage1_Main extends AppCompatActivity {
         if(language == null) {
             language = "";
         }
-
+        bharati_font = Typeface.createFromAsset(getAssets(), "fonts/NavBharati.ttf");
+        tamil_font = Typeface.createFromAsset(getAssets(), "fonts/baamini.ttf");
         characters = new ArrayList<Character>();
 
         //Toast.makeText(getBaseContext(), language, Toast.LENGTH_SHORT).show();
         languageName.setText(language);
 
-        //hiding buttons 13-18 if type is vowel (only 12 vowels)
-        if(type.equals("vowel")) {
-            hideExtras = true;
-            button13.setVisibility(View.GONE);
-            button14.setVisibility(View.GONE);
-            button15.setVisibility(View.GONE);
-            button16.setVisibility(View.GONE);
-            button17.setVisibility(View.GONE);
-            button18.setVisibility(View.GONE);
-        }
-        else {
-            hideExtras = false;
-            button13.setVisibility(View.VISIBLE);
-            button14.setVisibility(View.VISIBLE);
-            button15.setVisibility(View.VISIBLE);
-            button16.setVisibility(View.VISIBLE);
-            button17.setVisibility(View.VISIBLE);
-            button18.setVisibility(View.VISIBLE);
-        }
-
         //adding bharati characters
         //String letter, String type, MediaPlayer sound, int source, Context classToCreateSound
         if(language.equals("Tamil")) {
-            characters.add(new Character("அ", "vowel", sound, R.raw.short_a, Stage1_Main.this));
-            characters.add(new Character("ஆ", "vowel", sound, R.raw.long_a, Stage1_Main.this));
-            characters.add(new Character("இ", "vowel", sound, R.raw.short_i, Stage1_Main.this));
-            characters.add(new Character("ஈ", "vowel", sound, R.raw.long_e, Stage1_Main.this));
-            characters.add(new Character("உ", "vowel", sound, R.raw.short_u, Stage1_Main.this));
-            characters.add(new Character("ஊ", "vowel", sound, R.raw.long_o, Stage1_Main.this));
-            characters.add(new Character("எ", "vowel", sound, R.raw.short_e, Stage1_Main.this));
-            characters.add(new Character("ஏ", "vowel", sound, R.raw.long_ae, Stage1_Main.this));
-            characters.add(new Character("ஐ", "vowel", sound, R.raw.short_ai_ay, Stage1_Main.this));
-            characters.add(new Character("ஒ", "vowel", sound, R.raw.short_o, Stage1_Main.this));
-            characters.add(new Character("ஓ", "vowel", sound, R.raw.long_ae, Stage1_Main.this));
-            characters.add(new Character("ஔ", "vowel", sound, R.raw.long_ow_ou, Stage1_Main.this));
-            characters.add(new Character("க", "consonant", sound, R.raw.cons_k, Stage1_Main.this));
-            characters.add(new Character("ங", "consonant", sound, R.raw.cons_ng, Stage1_Main.this));
-            characters.add(new Character("ஜ", "consonant", sound, R.raw.short_a, Stage1_Main.this));
-            characters.add(new Character("ஞ", "consonant", sound, R.raw.cons_ngh, Stage1_Main.this));
-            characters.add(new Character("ட", "consonant", sound, R.raw.cons_d_t, Stage1_Main.this));
-            characters.add(new Character("ண", "consonant", sound, R.raw.cons_nn, Stage1_Main.this));
-            characters.add(new Character("ப", "consonant", sound, R.raw.cons_p_b, Stage1_Main.this));
-            characters.add(new Character("த", "consonant", sound, R.raw.cons_th_dh, Stage1_Main.this));
-            characters.add(new Character("ந", "consonant", sound, R.raw.cons_n, Stage1_Main.this));
-            characters.add(new Character("ம", "consonant", sound, R.raw.cons_m, Stage1_Main.this));
-            characters.add(new Character("ய", "consonant", sound, R.raw.cons_y, Stage1_Main.this));
-            characters.add(new Character("ர", "consonant", sound, R.raw.cons_r, Stage1_Main.this));
-            characters.add(new Character("ல", "consonant", sound, R.raw.cons_l, Stage1_Main.this));
-            characters.add(new Character("வ", "consonant", sound, R.raw.cons_v, Stage1_Main.this));
-            characters.add(new Character("ழ", "consonant", sound, R.raw.cons_zh, Stage1_Main.this));
-            characters.add(new Character("ள", "consonant", sound, R.raw.cons_ll, Stage1_Main.this));
-            characters.add(new Character("ற", "consonant", sound, R.raw.cons_r_try, Stage1_Main.this));
-            characters.add(new Character("ன", "consonant", sound, R.raw.cons_n_tin, Stage1_Main.this));
+            characters.add(new Character("அ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஆ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("இ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஈ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("உ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஊ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("எ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஏ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஐ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஒ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஓ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஔ", "vowel", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("க", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ங", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஜ", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ஞ", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ட", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ண", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ப", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("த", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ந", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ம", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ய", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ர", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ல", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("வ", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ழ", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ள", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ற", "consonant", sound, R.raw.ding, Stage1_Main.this));
+            characters.add(new Character("ன", "consonant", sound, R.raw.ding, Stage1_Main.this));
         }
         else {
-            characters.add(new Character("அ", "vowel", sound, R.raw.short_a, Stage1_Main.this));
+            characters.add(new Character("அ", "vowel", sound, R.raw.ding, Stage1_Main.this));
         }
 
         createSounds(characters);
@@ -177,13 +154,16 @@ public class Stage1_Main extends AppCompatActivity {
     public void loadCharacters(ArrayList<Character> characters, int indexToStart, int indexToEndPlusOne) throws IOException {
         clearAllButtons();
         for(int i=indexToStart; i<indexToEndPlusOne; i++) {
+            characterButtons[i-indexToStart].setTypeface(bharati_font);
+            //characterButtons[i].setTypeface(tamil_font);
+            //characterButtons[i].setTypeface(Typeface.DEFAULT);
             characterButtons[i-indexToStart].setText(characters.get(i).getLetter());
         }
     }
 
     public void padArrayListToMakeMultOfEighteen(int numberOfElements, String type) {
         for(int i=0; i<numberOfElements; i++) {
-            charactersToBeDisplayed.add(new Character(" ", type, sound, R.raw.short_a, Stage1_Main.this));
+            charactersToBeDisplayed.add(new Character(" ", type, sound, R.raw.ding, Stage1_Main.this));
         }
     }
 
@@ -223,7 +203,7 @@ public class Stage1_Main extends AppCompatActivity {
         return letters;
     }
 
-    public void playSound(View view) throws IOException {
+    public void onClick(View view) throws IOException {
         Toast.makeText(getBaseContext(),getIndexThatMatchesId(view.getId())+"", Toast.LENGTH_SHORT).show();
         if(characters.get(getIndexThatMatchesId(view.getId())).getSound() == null) {
             Toast.makeText(getBaseContext(), "null", Toast.LENGTH_SHORT).show();
